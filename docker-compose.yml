@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ingestion-daemon:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - nlm-ingestor
+    networks:
+      - mynetwork
+
+  nlm-ingestor:
+    image: ghcr.io/nlmatics/nlm-ingestor:latest
+    ports:
+      - "5010:5001"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
